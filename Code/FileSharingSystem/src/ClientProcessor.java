@@ -8,6 +8,36 @@
  *
  * @author Sakamoto Jin
  */
-public class ClientProcessor {
+import java.net.*;
+import java.io.*;
+
+public class ClientProcessor extends Thread 
+{
+  Socket clnt;
+  ClientProcessor(Socket s)
+  {
+    clnt = s;
+    //active the thread
+    start();
     
+  }
+  
+  public void run()
+  {
+    try
+    {
+      DataInputStream din = new DataInputStream(clnt.getInputStream());
+      DataOutputStream dout = new DataOutputStream(clnt.getOutputStream());
+      
+      String key = "myIndex";
+      FileManager fMgr = FileManager.getObject();
+      fMgr.search( key, "B1.png");
+    }
+    catch(Exception ex)
+    {
+      System.out.println("Err : "+ ex);
+    }
+  
+  }//run
+  
 }
